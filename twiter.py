@@ -2,8 +2,8 @@ import tweepy
 import time
 
 if __name__ == '__main__':
-    auth = tweepy.OAuthHandler('m7yOvFvCchSfRTbNXTLXnjwWB', 'FIytkBCfvefqIr7Ru1TULUTGuXFvqKSQ3gIfrOJpR8pZNMgSt5')
-    auth.set_access_token('1314925517158531072-NktbC7Mv4y5bCYwgDzQePSbkXrA7Tf', 'egyupXKBo7feIxiyCTB1nKYX23CkbsTiBdMA39yMRzMQ9')
+    auth = tweepy.OAuthHandler('ANOwYsIT9bCuiuPQ6wlq1DN7U', 'EJ3F4HVF212S1B9qZwl4rsUKgDkkKTlaWdNhQQjijHJmoSdbIL')
+    auth.set_access_token('1314925517158531072-43qIo3pbRY7SiyWOqVW6cQzTluTTrG', 'mbNiDAQkLNavtod8CPoqYS0QIAKqr6kF6TppAj4Yrzxrp')
 
     api = tweepy.API(auth)
     user = api.me()
@@ -15,8 +15,8 @@ if __name__ == '__main__':
     print(diff_user.followers_count)
     public_tweets = api.home_timeline()
 
-    for tweet in public_tweets:
-        print(tweet.text)
+    # for tweet in public_tweets:
+    #     print(tweet.text)
 
     def limit_handler(cursor):
         try:
@@ -33,6 +33,16 @@ if __name__ == '__main__':
     # for follower in limit_handler(tweepy.Cursor(api.user_timeline).items()):
     #     if follower.followers_count > 100:
     #         follower.follow()
-        
 
+    search_string = 'Nihar'
+    numberOfTweets = 5
+
+    for tweet in tweepy.Cursor(api.search, search_string).items(numberOfTweets):
+        try:
+            tweet.favorite()
+            print(f'{tweet.text} ----> has been liked')
+        except tweepy.TweepError as e:
+            print(e.reason)
+        except StopIteration:
+            break
 
